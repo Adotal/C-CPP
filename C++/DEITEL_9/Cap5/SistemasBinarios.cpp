@@ -28,7 +28,7 @@ int main(){
 
 	unsigned int decimal=1;
 
-	cout << left
+	cout << "  " << left
 		 << setw(5) << "DEC"
 		 << setw(10) << "BINARIO"
 		 << setw(6) << "OCTAL"
@@ -37,12 +37,12 @@ int main(){
 	 
 
 	for(decimal=1; decimal <= 256; ++decimal){
-
-		cout << setw(5) << dec << decimal;
-		cout << setw(10) << dec << conv_binario(decimal);
-		cout << setw(5) << oct << decimal;
-		cout << setw(4) << hex << decimal;
-		cout << endl;
+		cout << right
+			 << setw(5) << dec << decimal
+			 << setw(10) << dec << conv_binario(decimal)
+			 << setw(5) << oct << decimal
+			 << setw(4) << hex << decimal
+			 << endl;
 
 	}
 
