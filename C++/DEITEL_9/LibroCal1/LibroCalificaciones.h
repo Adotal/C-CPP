@@ -10,17 +10,11 @@ class LibroCalificaciones {
 		void establecerNombreCurso(std::string);
 		std::string obtenerNombreCurso() const; 
 		void mostrarMensaje() const;
-		void determinarPromedio() const;
 		void recibirCalificaciones();
 		void mostrarReporte() const;
-
+		int maximo(int, int, int) const;
 	private:
 		std::string nombreCurso;
-		int aCount;
-		int bCount;
-		int cCount;
-		int dCount;
-		int eCount;
-		int fCount;
+		int califMax;
 };
 

@@ -8,7 +8,7 @@ using namespace std;
 
 //Constructor
 LibroCalificaciones::LibroCalificaciones(string nombre)
-	:aCount(0), bCount(0), cCount(0), dCount(0), eCount(0), fCount(0)
+	: califMax(0)
 {
 	establecerNombreCurso(nombre);
 }
@@ -18,9 +18,10 @@ void LibroCalificaciones::establecerNombreCurso(string nombre){
 		nombreCurso = nombre;
 	} else{
 		nombreCurso = nombre.substr(0, 25);
-		cerr << "El nombre \"" << nombre
-		     << "\" excede la longitud de carácteres(25).\n"	
-		        "se limitó el nombre del curso a los primeros 25 carácteres\n"
+		cerr << "\nEl nombre \"" << nombre
+			 << "\" excede la longitud de carácteres(25)."
+			    "\nSe limitó el nombre del curso a los"
+				"\nprimeros 25 carácteres."
 		     << endl;
 	}
 }
@@ -34,91 +35,23 @@ void LibroCalificaciones::mostrarMensaje() const {
 	     << obtenerNombreCurso() << "!" << endl;
 }
 
-void LibroCalificaciones::determinarPromedio() const {
+void LibroCalificaciones::recibirCalificaciones(){
+	int calif1, calif2, calif3;
+	cout << "Introduzca tres calificaciones enteras: ";
+	cin >> calif1 >> calif2 >> calif3;
 
-	int total = 0;
-	unsigned int contador = 0;
-	int cal = 0;
-
-	cout << contador <<". Escriba una calificación o -1 para salir: ";
-	cin >> cal;
-
-
-	while(cal != -1){
-		total += cal;
-		contador ++;
-		cout << contador <<". Escriba una calificación o -1 para salir: ";
-		cin >> cal;
-	}
-
-	if(contador != 0){
-		double promedio = static_cast<double> (total) / contador;
-	
-		cout << "\nEl total de las calificaciones es " << total;
-		cout << setprecision(2) << fixed;
-		cout <<	"\nEl promedio de las clase es " << promedio << endl;
-	} else {
-		cerr << "No se introducieron valores.";
-	}
+	califMax = maximo(calif1, calif2, calif3);
 }
 
-void LibroCalificaciones::recibirCalificaciones(){
-	int calif;
-	cout << "Escriba las califcaciones en letras (A,B,C,D,E,F).\n"
-			"Salir: Linux (Ctrl + d) Windows (Ctrl + z)." << endl;
-	
-	while( (calif = cin.get()) != EOF){
-
-		switch(calif){
-			case 'A':
-			case 'a':
-				++aCount;
-				break;
-			case 'B':
-			case 'b':
-				++bCount;
-				break;
-
-			case 'C':
-			case 'c':
-				++cCount;
-				break;
-
-			case 'D':
-			case 'd':
-				++dCount;
-				break;
-			case 'E':
-			case 'e':
-				++eCount;
-				break;
-			case 'F':
-			case 'f':
-				++fCount;
-				break;
-
-			case '\n':
-			case '\t':
-			case ' ':
-				break;
-
-			default:
-				cout << "Se introdujo un valor no admintido.\n"
-						"Escriba una nueva calificación." << endl;
-				break;
-		}
-	
-	}
+int LibroCalificaciones::maximo(int a, int b, int c) const {
+	int max = a;
+	if(b > max) max = b;
+	if(c > max) max = c;
+	return max;
 }
 
 void LibroCalificaciones::mostrarReporte() const {
-	cout << "\n\nNúmero de estudiantes que recibieron una calificación:"
-		 <<	"\nA: " << aCount
-		 <<	"\nB: " << bCount
-		 <<	"\nC: " << cCount
-		 <<	"\nD: " << dCount
-		 <<	"\nE: " << eCount
-		 <<	"\nF: " << fCount
-		 << endl;
+	cout << "Calificación maxima introducida: "
+		 << califMax;
 }
 
