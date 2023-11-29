@@ -1,4 +1,6 @@
 // main.cpp
+
+// Made by Adotal
 #include <iostream>
 #include <cstring>
 using namespace std;
