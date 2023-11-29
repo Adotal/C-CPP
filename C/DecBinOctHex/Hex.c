@@ -46,7 +46,7 @@ int main(){
 			} else if(digit==15){
 				printf("F");
 			} else {
-				printf("%i",valor/power);
+				printf("%i",digit);
 			}
 			valor=valor%power;
 			power/=16;
