@@ -5,11 +5,11 @@
 #include <ctime>
 using namespace std;
 
+enum Estado {CONTINUE, WIN, LOSE};
 void presenta();
 unsigned int rollDice();
 
 int main(){
-	enum Estado {CONTINUE, WIN, LOSE};
 
 	srand(static_cast<unsigned int>(time(0)));
 
