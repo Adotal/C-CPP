@@ -2,6 +2,9 @@
 // Exercises from 6.22 to 6.55 
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <random>
 #include <cmath>
 #include "Exercises.h"
 
@@ -20,8 +23,8 @@ void Exercises::printMenu(){
 		 << " 30.InvertirDígitos\n"
 		 << " 31.MáximoComúnDivisor\n"
 		 << " 32.PuntosDeCalidad\n"
-		 << " .PuntosDeCalidad\n"
-		 << " .PuntosDeCalidad\n"
+		 << " 33.LanzarMonedas\n"
+		 << " 34.AdivinarNúmero\n"
 		 << " .PuntosDeCalidad\n"
 		 << " .PuntosDeCalidad\n"
 
@@ -189,7 +192,47 @@ void Exercises::selector(int option){
 				cout << "Sus puntos de calidad equivalen a "
 					 << calidad4(val1) << endl;
 				break;
+
 			case 33:
+				int cara, cruz;	// 0-Cara, 1-Cruz
+				cara = cruz = 0;
+				
+				for(int i = 0; i < 100; ++i)
+					if(tirarMoneda())
+						++cruz;
+					else
+						++cara;
+				cout << "Resultados: " << endl
+					 << "Cara " << cara << endl
+					 << "Cruz " << cruz << endl;
+				break;
+
+			case 34:
+				int numA;
+				int intento;
+				char denuevo = 'n';
+				do{
+					numA = numeroAdivinar();
+					cout << "Tengo un numero entre 1 y 1000.\n"
+						    "Puedes adivinar mi numero?\n"
+							"Por favor escribe tu primera respuesta: ";
+
+					cin >> intento;
+					while(intento != numA){
+						if(intento > numA)
+							cout << "Demasiado alto. ";
+						else
+							cout << "Demasiado bajo. ";
+						cout << "Intenta de nuevo: "; 
+						cin >> intento;
+
+					}
+					// Si se llegó hasta aquí se ha logrado adivinar
+					cout << "Excelente!  Adivinaste el numero!\n"
+					    	"Te gustaria jugar de nuevo (s/n)?: "; 
+					cin >> denuevo;
+					// 's' = 115 ASCII
+				} while(denuevo == 's');
 				break;
 		}
 	} while (option != 0);
@@ -301,3 +344,24 @@ int Exercises::calidad4(int calif){
 	else
 		return 0;
 }
+
+// Set the random-number generator
+default_random_engine motor(static_cast<unsigned int>(time(0)));
+
+int Exercises::tirarMoneda(){
+//	return rand() % 2;
+
+	uniform_int_distribution<unsigned int> intMoneda(0, 1);
+	return intMoneda(motor);
+}
+
+int Exercises::numeroAdivinar(){
+	// Producir número aleatorio entre 1 y 1000
+
+	uniform_int_distribution<unsigned int> intRandomGame(1, 1000);
+	return intRandomGame(motor);
+}
+
+
+
+

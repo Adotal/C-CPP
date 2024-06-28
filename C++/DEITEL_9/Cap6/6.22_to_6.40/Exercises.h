@@ -19,5 +19,8 @@ class Exercises{
 		unsigned int digitosInverso(unsigned int);
 		int mcd(int, int); // 6.31
 		int calidad4(int); // 6.32
+		int tirarMoneda(); // 6.33
+		int numeroAdivinar(); // 6.34
+	private:
 
 };
