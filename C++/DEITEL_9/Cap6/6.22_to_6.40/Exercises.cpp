@@ -210,14 +210,17 @@ void Exercises::selector(int option){
 			case 34:
 				int numA;
 				int intento;
-				char denuevo = 'n';
+				int intentos;
+				char denuevo;
 				do{
+					denuevo = 'n';
 					numA = numeroAdivinar();
 					cout << "Tengo un numero entre 1 y 1000.\n"
 						    "Puedes adivinar mi numero?\n"
 							"Por favor escribe tu primera respuesta: ";
 
 					cin >> intento;
+					intentos = 1;
 					while(intento != numA){
 						if(intento > numA)
 							cout << "Demasiado alto. ";
@@ -225,14 +228,31 @@ void Exercises::selector(int option){
 							cout << "Demasiado bajo. ";
 						cout << "Intenta de nuevo: "; 
 						cin >> intento;
-
+						intentos++;
 					}
-					// Si se llegó hasta aquí se ha logrado adivinar
-					cout << "Excelente!  Adivinaste el numero!\n"
-					    	"Te gustaria jugar de nuevo (s/n)?: "; 
+					cout << "Excelente!  Adivinaste el numero!\n";
+					if(intentos < 10)
+						cout << "O ya sabía usted el secreto o tuvo suerte!\n";
+					else if(intentos == 10)
+						cout << "Ajá! Sabía usted el secreto!\n";
+					else 
+						cout << "Debería haberlo hecho mejor!\n";
+
+					cout <<	"Te gustaria jugar de nuevo (s/n)?: "; 
 					cin >> denuevo;
-					// 's' = 115 ASCII
 				} while(denuevo == 's');
+				break;
+
+			case 35:
+				double base;
+				int exponente;
+				cout << "Por favor introduzca la base: ";
+				cin >> base;
+				cout << "Por favor introduzca el exponente: ";
+				cin >> exponente;
+				cout << "El resultado es: " << base << "^"
+					 << exponente << " = "
+					 << potencia(base, exponente);
 				break;
 		}
 	} while (option != 0);
@@ -362,6 +382,18 @@ int Exercises::numeroAdivinar(){
 	return intRandomGame(motor);
 }
 
+
+double Exercises::potencia(double base, int exponente){
+	if(exponente > 1)
+		// x^y = x * x^(y-1)
+		return base * potencia(base, exponente - 1);
+	else if(exponente == 0)
+		// x⁰ = 1;
+		return 1;
+	else
+		// x¹ = x
+		return base;
+}
 
 
 

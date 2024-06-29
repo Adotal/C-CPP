@@ -21,6 +21,7 @@ class Exercises{
 		int calidad4(int); // 6.32
 		int tirarMoneda(); // 6.33
 		int numeroAdivinar(); // 6.34
+		double potencia(double, int); //6.35
 	private:
 
 };
