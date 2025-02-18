@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <string>
 #include <ctime>
 #include <random>
 #include <cmath>
@@ -24,15 +25,25 @@ void Exercises::printMenu(){
 		 << " 31.MáximoComúnDivisor\n"
 		 << " 32.PuntosDeCalidad\n"
 		 << " 33.LanzarMonedas\n"
-		 << " 34.AdivinarNúmero\n"
+		 << " 34_35.AdivinarNúmero\n"
+		 << " 36.ExponenteRecursivo\n"
+		 << " 37.SerieFibonacci(Iterativa)\n"
+		 << " 38.TorresHanoi(Recursiva)\n"
+		 << " 39.TorresHanoi(Iterativa)\n"
+		 << " 40.RecursividadVisual\n"
+		 << " 41.MCDRecursivo\n"
+		 << " 42.Distancia2Puntos\n"
+		 << " 45.ProductoRecursivo\n"
+		 << " 46.FuncionesMatemáticas\n"
+		 << " 47.Craps\n"
 		 << " .PuntosDeCalidad\n"
 		 << " .PuntosDeCalidad\n"
-
+		 << " .PuntosDeCalidad\n"
 		 << endl;
 }
 
 void Exercises::selector(int option){
-	long int val1, val2, val3;
+	long int val1, val2, val3, val4;
 	
 	do{
 		
@@ -192,7 +203,6 @@ void Exercises::selector(int option){
 				cout << "Sus puntos de calidad equivalen a "
 					 << calidad4(val1) << endl;
 				break;
-
 			case 33:
 				int cara, cruz;	// 0-Cara, 1-Cruz
 				cara = cruz = 0;
@@ -208,6 +218,7 @@ void Exercises::selector(int option){
 				break;
 
 			case 34:
+			case 35:
 				int numA;
 				int intento;
 				int intentos;
@@ -241,9 +252,9 @@ void Exercises::selector(int option){
 					cout <<	"Te gustaria jugar de nuevo (s/n)?: "; 
 					cin >> denuevo;
 				} while(denuevo == 's');
-				break;
 
-			case 35:
+				break;
+			case 36:
 				double base;
 				int exponente;
 				cout << "Por favor introduzca la base: ";
@@ -253,6 +264,64 @@ void Exercises::selector(int option){
 				cout << "El resultado es: " << base << "^"
 					 << exponente << " = "
 					 << potencia(base, exponente);
+				break;
+			case 37:
+				cout << "Escribe la cantidad de términos de la serie: ";
+				cin >> val1;
+				fibonacci(val1);
+
+				break;
+			case 38:{
+				int discos, 
+					origen = 1,
+					temporal = 2,
+					fina = 3;
+				cout << "Número de discos:";
+				cin >> discos;
+				cout << endl;
+				torresHanoi(discos, origen, temporal, fina);
+
+					}
+				break;
+			case 39:
+			// LAS TORRES SIEMPRE SON 2^N -1 MOVIMIENTOS
+				cout << "Número de discos:";
+				cin >> val1;
+				torresHanoiIterativa(val1);
+				break;
+			case 40:
+				int tab;
+				tab = 0;
+				cout << "Factorial de 5 =" << endl 
+					 << factorialRecursivoVisual(5, &tab) << endl;
+				break;
+
+			case 41:
+				cout << "INTRODUCE VALOR 1 DE MCD: ";
+				cin >> val1;
+				cout << "INTRODUCE VALOR 2 DE MCD: ";
+				cin >> val2;
+				cout << "MCD: " << mcdRec(val1, val2) << endl;
+				break;
+			case 42:
+				double x1, y1, x2, y2;
+				cout << "Punto (x1, y1): ";
+				cin >> x1 >> y1;
+				cout << "Punto (x2, y2): ";
+				cin >> x2 >> y2;
+
+				cout << "La distancia es: " << distancia2Puntos(x1, y1, x2, y2)
+					 << endl;
+
+				break;
+			case 45:
+				cout << "Introduce dos valoes a multiplicar recursivamente: "
+					 << endl;
+				cin >> val1 >> val2;
+				cout << productoRecursivo(val1, val2) << endl; 
+				break;
+			case 46:
+				funcionesMat();
 				break;
 		}
 	} while (option != 0);
@@ -395,5 +464,145 @@ double Exercises::potencia(double base, int exponente){
 		return base;
 }
 
+void Exercises::fibonacci(int nterminos){
+	int a = 0, b = 1;
+	while(nterminos > 0){
+		cout << a;
+		if(nterminos > 1)
+			cout << ", ";
+		--nterminos;
+		b += a;
+		a = b - a;
+	}
+}
 
 
+void Exercises::torresHanoi(int n, int orig, int temp, int fin){
+	if(n > 0){
+		torresHanoi(n-1, orig, fin, temp);
+		cout << " " << orig << " -> " << fin << endl;
+		torresHanoi(n-1, temp, orig, fin);
+	}
+
+}
+
+void Exercises::torresHanoiIterativa(int n){
+
+	int stack[n][2];
+	int i = 1;
+	int tran;
+	stack[0][0] = n--;
+	stack[0][1] = 123;
+
+
+	while(1){		
+		if(n > 0) {	// RECORRE A LA IZQ
+
+			// TEMP Y FINAL SE INTERCAMBIAN
+			stack[i][0] = n--;
+			tran = stack[i][1] = stack[i-1][1];
+		
+			stack[i][1] /= 100;
+			stack[i][1] *= 100;
+
+			stack[i][1] += (tran % 10) * 10;
+			stack[i][1] += (tran / 10 % 10);
+			++i;
+
+		} else {
+
+			// Descarta último 
+			--i;
+			cout << " " << stack[i][1] / 100 << " -> "
+				 << stack[i][1] % 10 << endl;
+
+			--i;
+			if(i < 0)	// Final de la solución
+				break;
+			// Descarta padre	
+			cout << " " << stack[i][1] / 100 << " -> "
+				 << stack[i][1] % 10 << endl;
+			// Se posiciona en hijo derecho
+			n = --stack[i][0];
+			
+			// ORIG Y TEMP SE INTERCAMBIAN
+			tran = stack[i][1];
+			stack[i][1] = (stack[i][1] / 10) % 10;
+			stack[i][1] *= 100;
+			stack[i][1] += (tran / 100) * 10;
+			stack[i][1] += tran % 10;
+			++i;
+			n--;
+		}
+	}
+
+}
+
+int Exercises::factorialRecursivoVisual(unsigned int n, int* tab){
+
+	for(int i = 0; i < *tab; ++i) cout << '\t';
+
+	if(n == 0){
+		cout << "1" << endl;
+		return 1;
+	}	else{
+		cout << n << " * (" << n << " - 1)!" << endl;
+		*tab = *tab + 1;
+		return n * factorialRecursivoVisual(n - 1, tab);
+	}
+}
+
+
+int Exercises::mcdRec(int x, int y){
+
+	if(0 == y)
+		return x;
+	else
+		return mcdRec(y, x % y);
+}
+
+
+double Exercises::distancia2Puntos(double x1, double y1, double x2, double y2){
+	return sqrt(pow(x2-x1, 2) + pow(y2 - y1, 2));
+}
+
+int Exercises::productoRecursivo(int a, int b){
+	if(b > 0)
+		return a + productoRecursivo(a, b - 1);
+	if(b < 0)
+		return -a + productoRecursivo(a, b + 1);
+	// If it is not bigger or smaller than 0, it is 0
+	return 0;
+}
+
+void Exercises::funcionesMat(){
+	
+	cout << " exp( x )   función exponencial ex \n"
+		 << "  exp( 1.0 ) es "  << exp(1.0) << endl
+		 << "  exp( 2.0 ) es " << exp(2.0) << endl
+		 << " fabs( x )  valor absoluto de x \n "
+		 << "  fabs( 5.1 ) es " << fabs(5.1 ) << endl
+		 << "  fabs( 0.0 ) es " << fabs(0.0) << endl
+		 << "  fabs( -8.76 ) es " << fabs(-8.76) << endl
+		 << " floor( x ) redondea x al entero más grande, no mayor a x\n"
+		 << "  floor( 9.2 ) es " << floor(9.2) << endl
+		 << "  floor( -9.8 ) es " << floor(-9.2) << endl
+		 << " fmod( x, y ) residuo de x/y como número de punto flotante\n"
+		 << "  fmod( 2.6, 1.2 ) es " << fmod(2.6, 1.2) << endl
+		 << " log( x ) logaritmo natural de x (base e)\n"
+		 << "  log( 2.718282 ) es " << log(2.718282) << endl
+		 << "  log( 7.389056 ) es " << log(7.389056) << endl
+		 << " log10( x ) logaritmo de x (base 10) \n"
+		 << "  log10( 10.0 ) es " << log10(10.0) << endl
+		 << "  log10( 100.0 ) es " << log10(100.9) << endl
+		 << " pow( x, y ) x elevado a la potencia y (xy) \n"
+		 << "  pow( 2, 7 ) es " << pow(2, 7) << endl
+		 << "  pow( 9, .5 ) es " << pow(9, .5) << endl
+		 << " sin( x ) seno trigonométrico de x(x en radianes) \n"
+		 << "  sin( 0.0 ) es " << sin(0) << endl
+		 << " sqrt( x ) raíz cuadrada de x (en donde x es un valor no negativo)\n"
+		 << "  sqrt( 9.0 ) es " << sqrt(9.0) << endl
+		 << " tan( x ) tangente trigonométrica de x(x en radianes)\n"
+		 << "  tan(0.2) es " << tan(0.2) << endl << endl;
+
+}

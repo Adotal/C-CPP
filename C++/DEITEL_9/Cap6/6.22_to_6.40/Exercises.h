@@ -20,8 +20,18 @@ class Exercises{
 		int mcd(int, int); // 6.31
 		int calidad4(int); // 6.32
 		int tirarMoneda(); // 6.33
-		int numeroAdivinar(); // 6.34
-		double potencia(double, int); //6.35
+		int numeroAdivinar(); // 6.34 & 6.25
+		double potencia(double, int); //6.36
+		void fibonacci(int nterminos);//6.37
+		void torresHanoi(int, int, int, int); // 6.38
+		void torresHanoiIterativa(int); // 6.39
+		int factorialRecursivoVisual(unsigned int, int*); // 6.40
+		int mcdRec(int, int);	// 6.41
+		double distancia2Puntos(double, double, double, double); // 6.42
+		// The line 13 "cout << c" is never executed // 6.43
+		// The program makes the x*y product // 6.44
+		int productoRecursivo(int, int); // 6.45
+		void funcionesMat(); // 6.46
 	private:
 
 };
