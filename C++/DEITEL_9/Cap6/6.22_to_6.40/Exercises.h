@@ -31,7 +31,10 @@ class Exercises{
 		// The line 13 "cout << c" is never executed // 6.43
 		// The program makes the x*y product // 6.44
 		int productoRecursivo(int, int); // 6.45
-		void funcionesMat(); // 6.46
+		void funcionesMat();			// 6.46
+		bool craps();					// 6.47
+		unsigned int crapsRollDice();
+		inline double areaCirculo(double);	// 6.48
 	private:
 
 };

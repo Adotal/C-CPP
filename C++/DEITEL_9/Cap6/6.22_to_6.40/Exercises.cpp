@@ -11,6 +11,10 @@
 
 using namespace std;
 
+// Set the random-number generator
+default_random_engine motor(static_cast<unsigned int>(time(0)));
+
+
 void Exercises::printMenu(){
 	cout << endl
 		 << " 22.SquareDefault\n"
@@ -36,7 +40,7 @@ void Exercises::printMenu(){
 		 << " 45.ProductoRecursivo\n"
 		 << " 46.FuncionesMatemáticas\n"
 		 << " 47.Craps\n"
-		 << " .PuntosDeCalidad\n"
+		 << " 48.Área de círculo\n"
 		 << " .PuntosDeCalidad\n"
 		 << " .PuntosDeCalidad\n"
 		 << endl;
@@ -314,14 +318,127 @@ void Exercises::selector(int option){
 					 << endl;
 
 				break;
+			
 			case 45:
 				cout << "Introduce dos valoes a multiplicar recursivamente: "
 					 << endl;
 				cin >> val1 >> val2;
 				cout << productoRecursivo(val1, val2) << endl; 
 				break;
+			
 			case 46:
 				funcionesMat();
+				break;
+	
+
+				
+			case 47:{
+				// Para una de 5 frases aleatorias en 3 sitauciones
+				uniform_int_distribution<unsigned int> intFrase(1, 5);
+				int saldoBanco;
+				int apuesta;
+				saldoBanco = 1000;
+				cout << "Saldo inicial: 1000\n";
+				do{
+					cout << "Introduce tu apuesta: ";
+					cin >> apuesta;
+					while(apuesta > saldoBanco) {
+						cout << "No puedes apostar más de lo que tienes:"
+							 << endl;
+						cin >> apuesta;
+					}
+					// SI gana el juego
+					if(craps()){
+						saldoBanco += apuesta;
+						switch(intFrase(motor)){
+							case 1:
+								cout << "La hizo en grande!"
+									 << endl;
+							break;
+							case 2:
+								cout << "Es su día de suerte!"
+									 << endl;
+							break;
+							case 3:
+								cout << "Buena esa!"
+									 << endl;
+							break;
+							case 4:
+								cout << "Ahora es tiempo de cambiar las fichas por efectivo!"
+									 << endl;
+							break;
+							case 5:
+								cout << "Puedo ser su amigo?"
+									 << endl;
+							break;
+						}
+						cout << "Felicidades, ha ganado el juego!\n";
+					} else {
+						saldoBanco -= apuesta;
+						switch(intFrase(motor)){
+							case 1:
+								cout << "No es su día de suerte"
+									 << endl;
+							break;
+							case 2:
+								cout << "No prefiere salir a tomar una bebia?"
+									 << endl;
+							break;
+							case 3:
+								cout << "Oh, se esta yendo a la quiebra, verdad?"
+									 << endl;
+							break;
+							case 4:
+								cout << "No siempre se gana!"
+									 << endl;
+							break;
+							case 5:
+								cout << "Ahora es tiempo de rendirse no?"
+									 << endl;
+							break;
+						}
+						cout << "Lo lamento, ha perdido el juego\n";
+					}
+					cout << "Su saldo es: " << saldoBanco;
+
+					if(saldoBanco != 0) {
+						cout << "\nQuiere jugar de nuevo [1-Sí][0-No]? ";						switch(intFrase(motor)){
+							case 1:
+								cout << "El que persevera..."
+									 << endl;
+							break;
+							case 2:
+								cout << "¿Qué es lo peor que puede pasar?"
+									 << endl;
+							break;
+							case 3:
+							case 5:
+								cout << "Oh, vamos, arriesguese!"
+									 << endl;
+							break;
+							case 4:
+								cout << "Hora de comer!"
+									 << endl;
+							break;
+						}
+	
+						cin >> apuesta;
+					} else {
+						cout << "\nLo siento. Se quedó sin fondos!";
+						apuesta = 0;
+					}
+
+				} while(apuesta == 1);
+				}
+				break;
+
+				case 48:
+					double rad;
+					cout << "Escribe el radio del círculo: ";
+					cin >> rad;
+					cout << "\nEl área es: " << areaCirculo(rad) << endl;
+				break;
+				case 49:
 				break;
 		}
 	} while (option != 0);
@@ -433,9 +550,6 @@ int Exercises::calidad4(int calif){
 	else
 		return 0;
 }
-
-// Set the random-number generator
-default_random_engine motor(static_cast<unsigned int>(time(0)));
 
 int Exercises::tirarMoneda(){
 //	return rand() % 2;
@@ -605,4 +719,53 @@ void Exercises::funcionesMat(){
 		 << " tan( x ) tangente trigonométrica de x(x en radianes)\n"
 		 << "  tan(0.2) es " << tan(0.2) << endl << endl;
 
+}
+
+bool Exercises::craps() {
+	// Retorna true si ganó, false si perdió
+
+	int tiro = crapsRollDice();
+	int punto = 0;
+
+	switch(tiro){
+		case 7:
+		case 11:
+			return true;	// Juego ganado
+		break;
+
+		case 2:
+		case 3:
+		case 12:
+			return false;	// Juego perdido
+		break;
+
+		default:
+			punto = tiro;
+			cout << "El punto es: " << punto << endl;
+
+			while(1){
+				tiro = crapsRollDice();
+				if(7 == tiro)
+					return false;
+				if(punto == tiro)
+					return true;
+			}
+		break;
+	}
+}
+
+unsigned int Exercises::crapsRollDice(){
+
+	uniform_int_distribution<unsigned int> intCraps(1, 6);
+	int dice1 = intCraps(motor);
+	int dice2 = intCraps(motor);
+	int suma = dice1 + dice2;
+	cout <<	"Tiro de dados: "
+		 << dice1 << " + " << dice2
+		 << " = " << suma << endl;
+	return suma;
+}
+
+inline double Exercises::areaCirculo(double radio){
+	return M_PI * radio * radio;
 }
