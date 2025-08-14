@@ -1,0 +1,109 @@
+----------------------ENUM------------------
+// Constantes de enumeración (sólo enteros)
+
+enum cierto {NO, SI};
+
+// Equivale a:
+
+#define NO=0
+#define SI=1
+
+// Es posible declarar variables de tipo enum (en realidad son de tipo entero)
+enum cierto c;
+
+-------------STRUCTS-----------------
+Los structs sirven para agrupar variables de distinto tipo
+Sintaxis:
+
+struct tipo {
+	campos
+} nombreVariable;
+
+*tipo no es obligatorio, si está se podrán definir más instancias de este tipo.
+*nombreVariable no es obligatorio si sólo se necesita definir un nuevo tipo de struct, si se especifica, se crea una variable con ese nombre.
+
+Se accede a las variables con 
+NombreStruct.nombreCampo = X;
+
+También puede haber arrays de structs
+
+Se puede inicializar en su declaración:
+struct {
+	int a;
+	char c;
+} cosa = {5, 'F'};
+
+A diferencia de arreglos, los structs si se pueden copiar con una asignación:
+str1 = str2;
+
+
+UNION: struct que sólo puede tener el valor de un miembro
+
+
+----------------CAMPOS DE BITS------------------------
+
+// Utilización de bits como banderas;
+
+struct t_nuevo {
+	unsigned int forma : 1;	// Un bit (2 posibles formas)
+	unsigned int color : 2;	// Dos bits (4 posibles colores)
+} dibujo;
+
+// Este uso de struct como campo de bits supone optimización de recursos:
+El struct dibujo es:
+---------------------
+| | | | | | | |f|f|c|
+---------------------
+
+----------------------PUNTEROS----------------------
+// Acceder a la información de un puntero = derreferenciar
+// &p es la dirección de la variable p;
+
+// Variables que ontienen la dirección en memoria a otra variables
+
+tipo * nombre_variable;
+
+struct tipo_s {
+	int a;
+	struct tipo_s * punteroStruct;	// Puntero a sí mismo
+};
+
+// Puntero verdadero a un array:
+int (*puntA) [10];	// Parentésis necesarios para no declarar un array de 10 punteros
+
+// Puntero usual a un array
+int *puntA;
+
+// Puntero a puntero
+int ** puntapuntA;
+
+// En tanto que un array de dos dimensiones es uno unidimensional que contiene arreglos unidimensionales
+// Apuntador a un arreglo bidimensional:
+int (*pA)[10];
+pA = & arregloBid;
+
+// Para que un apuntador apunte a un arreglo hay dos sintaxis
+pI = A[0];
+pI = A;
+
+// Punteros genéricos
+void * pun;		
+
+// Necesario hacer casting a punteros de tipo void
+
+int a;
+void * p;
+p = (void*) &a;
+(*(int*) p) = 4 
+
+
+// En el caso de un strcut existe el operador -> para acceder por apuntador a sus elementos
+(*p).x 
+// Es lo mismo que
+p->x
+
+// Un puntero también puede referenciar a los elementos de un array con p[] e incluso p[][]`
+
+
+----------------------ARITMÉTICA DE PUNTEROS------------------
+
