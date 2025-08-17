@@ -107,3 +107,31 @@ p->x
 
 ----------------------ARITMÉTICA DE PUNTEROS------------------
 
+// Sumar a un puntero un entero resulta en cambiar la posición eni memoria que se lee
+// La suma de dos punteros no está definida
+// La resta de dos punteros devualve cuantos datos caben entre ambas posiciones en memoria.
+
+---------------------------TYPEDEF-----------------------------------
+
+// Crear tipo de variable
+typedef tipo t_nombre_del_tipo;
+
+typedef struct {
+	int x;
+	int y;
+} t_tipoStruct;
+
+
+---------------------------FUNCIONES-----------------------------------
+
+// La declaración siguiente:
+void f1 (const int * p);
+
+// No expone que p sea constante, si no que a donde apunta p es constante;
+// Para que p sea constante:
+void f2 (int * const p);
+
+// Un parametro es innecesesario si no es ni de entrada ni de salida
+// Usar const para variables que no se modificarán
+// Comentar funciones
+
