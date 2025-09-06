@@ -135,3 +135,154 @@ void f2 (int * const p);
 // Usar const para variables que no se modificarán
 // Comentar funciones
 
+// Puntero a función:
+// Dada la función:
+int f (int i){}
+
+// Un puntero a ella es:
+
+int (*p) (int);
+
+// Se inicializa:
+
+p = f;
+
+// se invoca:
+
+int x = (*p) (4);
+
+-------------------------ARGUMENTOS EN INVOCACION DEL PROGRAMA---------------
+
+// Dado el caso siguiente, se borran los ficheros a.txt y b.txt
+
+# rm a.txt b.txt
+
+// En C Para que un programa reciba argumentos, se escriben en main
+
+int main(int numArgs, char *listaArgs[]){}
+
+// La lista de argumentos incluye el nombre del programa, por que en el ejemplo vale 3
+// La celda listaArgs(numArgs) contiene NULL
+
+// En el ejemplo, numArgs vale 3 y listaArgs: (\0 = NULL)
+
+0 - "rm\0"
+1 - "a.txt\0"
+2 - "b.txt\0"
+3 - NULL
+
+/*
+  La función main() devuelve un entero, que es 0 si la ejecución fue
+  exitosa, y 1 si no lo fue, en UNIX, para revisar la variable de 
+  retorno de un programa se escribe:
+*/  
+
+# echo $?
+
+
+---------FUNCIONES CON NUMERO DE ARGUMENTOS DISTINTO----------
+
+/* 
+  Funciones como printf() pueden ser invocadas con número diverso dea argumentos
+  La función debe tener al menos un parámetro fijo
+  Dentro de la función debe declararse una variable va_list;
+
+*/
+
+
+-----------------Distribución en distintos ficheros---------------
+
+/*
+  Para comilar un programa, primero se hacen códigos objeto .o
+  y después se enlazan entre sí.
+  Para invluir ficheros .h se utiliza la forma:
+  #include "fic.h"	// Para ficheros en el mismo directorio
+  #include <fic.h>	// Para se busca en el compilador
+
+
+  Se suele escribir un .h por cada .c que exporte un objeto
+  Si a.c tiene una función, se escribe un a.h con la signatura de la función
+  
+  Para evitar múltipes inclusiones del mismo fichero X.h se hace:
+  El fichero se incluye sólo si un símbolo no está definido
+
+  #ifndef X_YA_INCLUIDO
+  	#define X_YA_INCLUIDO	
+  #endif
+  
+*/
+
+--------------REGLAS DE ALCANCE--------------------------
+
+/*
+	"extern" para poner avisos a compilador
+	Restringir visibilidad de objetos globales a otros ficheros con "static"
+	Variables static no se borran al terminar bloque de código, toman valor 0 predeterminado
+	Puede haber objetos con el mismo nombre siempre que esten definidos en ambitos disntintos
+*/
+
+----------------PREPROCESADOR---------------------
+
+*/
+	El preprocesador elimina comentarios
+	Cualquier línea #include se reemplaza por el fichero que invoca
+
+	#define nombre texto
+	Los #define también reciben el nombre de macros
+	El preprocesador cambia todas las ocurrencias del define por el 
+	valor corresponediente, excepto en comentarios y strings
+
+	Se puede escribir para usar varia líneas
+	#define escribiendo \
+	{ \
+	printf("hola"); \
+	printf("esas"); \
+	} \
+	\
+
+	La definición de una macro puede cancelarse con la directiva
+	#undef nombreMacro
+	y a partir de este punto no se cuenta el macro
+
+	Se pueden definir macros con argumentos:
+	#define intercambia(A, B, AUX) \
+	AUX = A; \
+	A = B;	 \
+	B = AUX; \
+
+	#define cuadrado(X) (X*X)
+
+	Los macros sólo son aconsejables cuando el tiempo de ejecución es primordial,
+	pues se ahorra una llaamada a función, pero no es aconsejable en general. Puesto
+	que el ahorro sólo es perceptible si las llamadas son recurrentes
+
+	#define m(A) "A"
+	m(hola) siempre da "A"
+
+	#define m(A) #A
+	m(hola) resulta "hola"
+
+	#define juntos(A, B) A ## B
+	juntos(ho,la) resulta hola
+
+	// #if #ifdef #ifndef
+
+	#if LANG == ESP
+		#define HOLA="bUENOS DIAS"
+	#elif LANG == ENG
+		#define HOLA="good morning"
+	#else
+		#define HOLA="Esperanto"
+	#endif
+
+	// Equivalencias
+	#ifdef VALOR
+	es lo mismo que
+	#if defined(VALOR)
+
+	#ifndef VALOR
+	mismo que
+	#if !defined(VALOR)
+		
+
+/*
